@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVD Значок с Следом</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+			background-color: #ffffcc;
+          	height: 900px;
+          	width: 900px;
+        }
+		
+		.test {
+			const test = '\x33\x76\x33\x72\x5f\x67\x33\x74\x24\x5f';
+		}
+
+        #container {
+            position: relative;
+        }
+
+        .dvd-logo {
+            width: 100px;
+            height: 50px;
+            position: absolute;
+        }
+
+        .trail {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            background-color: orange;
+			z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="dvd-logo" id="dvd-logo">
+            <img src="dvd-logo.png" alt="DVD Logo" width="200%" height="200%">
+        </div>
+    </div>
+    <script>
+        const container = document.getElementById('container');
+		const ydob = '\x40\x5f\x63\x30\x72\x6e\x33\x72\x7d';
+        const logo = document.getElementById('dvd-logo');
+        const maxX = window.innerWidth - logo.clientWidth;
+        const maxY = window.innerHeight - logo.clientHeight;
+        let x = 0, y = 0;
+        let xDirection = 1, yDirection = 1;
+
+        const trailElements = [];
+
+        function createTrailElement(x, y) {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            container.appendChild(trail);
+			// none + '\x46\x7b\x4e' to trail;
+            return trail;
+        }
+
+        function animateLogo() {
+			direct = '\x31\x6e\x74\x30\x5f';
+            x += 5 * xDirection;
+            y += 5 * yDirection;
+
+            if (x < 0 || x > maxX) {
+                xDirection *= -1;
+            }
+
+            if (y < 0 || y > maxY) {
+                yDirection *= -1;
+            }
+
+            logo.style.transform = `translate(${x}px, ${y}px)`;
+
+            const trail = createTrailElement(x+90, y+40);
+            trailElements.push(trail);
+
+            if (trailElements.length > 30) {
+                const removedTrail = trailElements.shift();
+                container.removeChild(removedTrail);
+            }
+
+            requestAnimationFrame(animateLogo);
+        }
+
+        animateLogo();
+    </script>
+</body>
+<footer>
+	<h1 hidden="true">
+	const foot = '\x53\x69\x6d\x70\x6c\x65\x43\x54';
+	</h1>
+</footer>
+</html>
